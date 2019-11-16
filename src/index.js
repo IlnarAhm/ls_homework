@@ -7,41 +7,35 @@
  1.2: Функция должна возвращать аргумент, переданный ей в качестве параметра
 
  Пример:
-   returnFirstArgument(10) вернет 10
-   returnFirstArgument('привет') вернет `привет`
+    returnFirstArgument(10) вернет 10
+    returnFirstArgument('привет') вернет `привет`
 
  Другими словами: функция должна возвращать в неизменном виде то, что поступает ей на вход
  */
 function returnFirstArgument(argument) {
-  return argument;
+    return argument;
 }
-
-console.log(returnFirstArgument('привет'));
 /*
  Задание 2:
 
  2.1: Функция должна возвращать сумму переданных аргументов
 
  Пример:
-   sumWithDefaults(10, 20) вернет 30
-   sumWithDefaults(2, 4) вернет 6
+    sumWithDefaults(10, 20) вернет 30
+    sumWithDefaults(2, 4) вернет 6
 
  2.1 *: Значение по умолчанию для второго аргумента должно быть равно 100
 
  Пример:
    sumWithDefaults(10) вернет 110
  */
-function sumWithDefaults(a, b) {  
-  if (b != undefined) {
-    return a + b;
-  } else {
-    b = 100;
-    return a + 100;
-  }
-}
+function sumWithDefaults(a, b) {
+    if (b != undefined) {
+        return a + b;
+    }
 
-console.log(sumWithDefaults(10));
-console.log(sumWithDefaults(2, 4));
+    return a + 100;
+}
 
 /*
  Задание 3:
@@ -52,10 +46,8 @@ console.log(sumWithDefaults(2, 4));
    returnFnResult(() => 'привет') вернет 'привет'
  */
 function returnFnResult(fn) {
-  return fn();
+    return fn();
 }
-
-console.log(returnFnResult(() => 'привет'));
 /*
  Задание 4:
 
@@ -71,16 +63,17 @@ console.log(returnFnResult(() => 'привет'));
  */
 
 function returnCounter(number) {
-	return function func() {
-		return ++number;
-	};
+    if (number != undefined) {
+        return function func() {
+            return ++number;
+        };
+    } 
+    number = 0;
+
+    return function func() {
+        return ++number;
+    };
 }
-
-var f = returnCounter(47);
-
-console.log(f());
-console.log(f());
-console.log(f());
 
 /*
  Задание 5 *:
@@ -92,16 +85,14 @@ console.log(f());
    returnArgumentsArray(1, 2, 3) вернет [1, 2, 3]
  */
 function returnArgumentsArray() {
-  let arr = [];
+    let arr = [];
 
-  for (let i = 0; i < arguments.length; i++) {
-    arr[i] = arguments[i];
-  }
-
-  return arr;
+    for (let i = 0; i < arguments.length; i++) {
+        arr[i] = arguments[i];
+    }
+    
+    return arr;
 }
-
-console.log(returnArgumentsArray(1, 2, 3, 6));
 /*
  Задание 6 *:
 
@@ -118,6 +109,7 @@ console.log(returnArgumentsArray(1, 2, 3, 6));
    console.log(newSum()) выведет 6
  */
 function bindFunction(fn) {
+    return fn;
 }
 
 export {
