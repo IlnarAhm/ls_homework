@@ -23,7 +23,7 @@ function addListener(eventName, target, fn) {
 function removeListener(eventName, target, fn) {
     target.removeEventListener(eventName, fn);
 }
-
+   
 /*
  Задание 3:
 

@@ -21,7 +21,7 @@ const homeworkContainer = document.querySelector('#homework-container');
  Функция должна создавать и возвращать новый div с классом draggable-div и случайными размерами/цветом/позицией
  Функция должна только создавать элемент и задвать ему случайные размер/позицию/цвет
  Функция НЕ должна добавлять элемент на страницу. На страницу элемент добавляется отдельно
-
+  
  Пример:
    const newDiv = createDiv();
    homeworkContainer.appendChild(newDiv);
