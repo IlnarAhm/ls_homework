@@ -37,6 +37,23 @@ const homeworkContainer = document.querySelector('#homework-container');
  https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json
  */
 function loadTowns() {
+    return new Promise((resolve, reject) => {
+        fetch('https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json')
+            .then(response => {
+                if (response.status >= 400) {
+                    return Promise.reject();
+                }
+
+                return response.json();
+            })
+            .then(towns => {
+                let sorted = towns.sort((a, b) => {
+                    return a.name > b.name ? 1 : -1;
+                });
+                resolve(sorted);
+            })
+            .catch(() => console.error('Где-то ошибка'));
+    })
 }
 
 /*
@@ -51,6 +68,7 @@ function loadTowns() {
    isMatching('Moscow', 'Moscov') // false
  */
 function isMatching(full, chunk) {
+    return full.toUpperCase().includes(chunk.toUpperCase());
 }
 
 /* Блок с надписью "Загрузка" */
@@ -59,12 +77,48 @@ const loadingBlock = homeworkContainer.querySelector('#loading-block');
 const filterBlock = homeworkContainer.querySelector('#filter-block');
 /* Текстовое поле для поиска по городам */
 const filterInput = homeworkContainer.querySelector('#filter-input');
+filterInput.style.cssText = 'width: 600px; height: 50px; font-size: 16px; padding-left: 20px;';
 /* Блок с результатами поиска */
 const filterResult = homeworkContainer.querySelector('#filter-result');
+filterResult.style.cssText = 'width: 400px; border: 1px solid #d4d4d4; padding: 20px;';
 
-filterInput.addEventListener('keyup', function() {
-    // это обработчик нажатия кливиш в текстовом поле
-});
+loadTowns()
+    .then(sortTowns => {
+        homeworkContainer.prepend(filterInput);
+
+        filterInput.addEventListener('keyup', function (event) {
+            filterResult.innerHTML = '';
+            let chunk = event.target.value;
+
+            for (const town of sortTowns) {
+                const full = town.name;
+                if (isMatching(full, chunk)) {
+                    let div = document.createElement('div');
+                    div.textContent = full;
+                    filterResult.appendChild(div);
+                }
+            }
+
+            if (!chunk) {
+                filterResult.innerHTML = '';
+            }
+
+            if (filterResult.innerHTML !== '') {
+                filterBlock.style.display = 'block';
+                loadingBlock.style.display = 'none';
+            } else {
+                filterBlock.style.display = 'none';
+                loadingBlock.style.display = 'block';
+            }
+
+        });
+    })
+    .catch(() => {
+        alert('Не удалось загрузить города');
+    });
+
+
+
 
 export {
     loadTowns,
